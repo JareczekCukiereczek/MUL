@@ -5,8 +5,8 @@ import unidecode
 import re
 
 def normalize_phrase(phrase):
-    phrase = re.sub(r'[^\w\s]', '', phrase)  # Remove punctuation
-    return unidecode.unidecode(phrase).lower()  # Remove Polish characters and convert to lowercase
+    phrase = re.sub(r'[^\w\s]', '', phrase)
+    return unidecode.unidecode(phrase).lower()
 
 def find_audio_file(directory, phrase):
     normalized_phrase = normalize_phrase(phrase)
