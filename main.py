@@ -4,17 +4,22 @@ import os
 import unidecode
 import re
 
-def normalize(phrase):
-    phrase = re.sub(r'[^\w\s]', '', phrase)
-    return unidecode.unidecode(phrase).lower()
 
 def find_audio(directory, phrase):
-    normalized_phrase = normalize(phrase)
-    for filename in os.listdir(directory):
-        normalized_filename = normalize(filename)
-        if normalized_phrase in normalized_filename:
-            return os.path.join(directory, filename)
-    return None
+    search_phrase = normalize(phrase)
+    matching_files = [
+        os.path.join(directory, filename)
+        for filename in os.listdir(directory)
+        if search_phrase in normalize(filename)
+    ]
+    return matching_files[0] if matching_files else None
+
+
+def normalize(phrase):
+    cleaned_phrase = re.sub(r'[^\w\s]', '', phrase)
+    normalized_phrase = unidecode.unidecode(cleaned_phrase).lower()
+    return normalized_phrase
+
 
 def processingPhrase(phrases, directories):
     audio_segments = []
